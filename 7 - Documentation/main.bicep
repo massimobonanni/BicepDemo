@@ -6,6 +6,10 @@
 param environmentType string
 
 param location string = resourceGroup().location
+param sqlAdminUser string
+
+@secure()
+param sqlAdminPwd string
 
 module frontEndLayer 'modules/frontEndLayer.bicep' = {
   name: 'frontEndLayer'
@@ -14,6 +18,7 @@ module frontEndLayer 'modules/frontEndLayer.bicep' = {
     environmentType: environmentType
     storageAccountId:dataLayer.outputs.storageAccountId
     appInsightInstrumentationKey: (environmentType == 'prod') ? monitoringLayer.outputs.frontEndPpInsightKey : ''
+    sqlConnectionString : dataLayer.outputs.sqlConnectionString
   }
 }
 
@@ -22,6 +27,8 @@ module dataLayer 'modules/dataLayer.bicep' = {
   params: {
     location: location
     environmentType: environmentType 
+    sqlAdminPwd : sqlAdminPwd
+    sqlAdminUser: sqlAdminUser
   }
 }
 

@@ -7,6 +7,7 @@ param environmentType string
 param location string = resourceGroup().location
 param storageAccountId string
 param appInsightInstrumentationKey string
+param sqlConnectionString string
 
 var appPlanSku = {
   name: (environmentType == 'prod') ? 'P1' : 'F1'
@@ -30,7 +31,17 @@ resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
       'StorageAccountKey' : listKeys(storageAccountId,'2019-04-01').keys[0].value
       'APPINSIGHTS_INSTRUMENTATIONKEY':(environmentType == 'prod') ? appInsightInstrumentationKey : ''
     }
- }
+  }
+
+  resource connectionStrings 'config'={
+    name : 'connectionstrings'
+    properties:{
+      'SqlConnectionString' : {
+        type : 'SQLAzure'
+        value : sqlConnectionString
+      } 
+    }
+  }
 }
 
 resource frontEndAppServicePlan 'Microsoft.Web/serverfarms@2021-01-01'={

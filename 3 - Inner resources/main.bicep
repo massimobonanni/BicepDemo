@@ -7,9 +7,16 @@ param environmentType string
 
 param location string = resourceGroup().location
 
+param sqlAdminUser string
+
+@secure()
+param sqlAdminPwd string
+
 var frontEndAppName = 'BicepFrontEnd${environmentType}'
 var frontEndAppPlanName = 'BicepFrontEndPlan${environmentType}'
 var storageAccountName = 'fe${environmentType}${uniqueString(resourceGroup().id)}'
+var sqlServerName = 'sql${environmentType}${uniqueString(resourceGroup().id)}'
+var sqlDbName = 'db${environmentType}${uniqueString(resourceGroup().id)}'
 
 var storageAccountSkuName ='Standard_GRS'
 
@@ -27,12 +34,22 @@ resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
     serverFarmId: frontEndAppServicePlan.id
   }
 
-  resource appServiceConfiguration 'config'={
+  resource appSettings 'config'={
     name : 'appsettings'
     properties:{
       'StorageAccountKey' : listKeys(storageAccount.id,'2019-04-01').keys[0].value
     }
- }
+  }
+
+  resource connectionStrings 'config'={
+    name : 'connectionstrings'
+    properties:{
+      'SqlConnectionString' : {
+        type : 'SQLAzure'
+        value : 'Server=tcp:${sqlServer.properties.fullyQualifiedDomainName},1433;Database=${sqlDbName};User Id=${sqlAdminUser};Password=${sqlAdminPwd};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+      } 
+    }
+  }
 }
 
 resource frontEndAppServicePlan 'Microsoft.Web/serverfarms@2021-01-01'={
@@ -54,4 +71,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   tags:{
     'Demo':'Bicep'
   }
+}
+
+resource sqlServer 'Microsoft.Sql/servers@2021-02-01-preview' = {
+  name: sqlServerName
+  location:location
+  properties:{
+    administratorLogin: sqlAdminUser
+    administratorLoginPassword:sqlAdminPwd
+  }
+}
+
+resource sqlDb 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
+  name: sqlDbName
+  location: location
+  parent: sqlServer
 }
