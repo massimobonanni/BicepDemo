@@ -1,3 +1,7 @@
+@minLength(3)
+@maxLength(6)
+param environmentName string
+
 @allowed([
   'dev'
   'test'
@@ -9,12 +13,13 @@ param storageAccountId string
 param appInsightInstrumentationKey string
 param sqlConnectionString string
 
+var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
+var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
+
 var appPlanSku = {
   name: (environmentType == 'prod') ? 'P1' : 'F1'
   tier: (environmentType == 'prod') ? 'Premium' : 'Free'
 }
-var frontEndAppName = 'BicepFrontEnd${environmentType}'
-var frontEndAppPlanName = 'BicepFrontEndPlan${environmentType}'
 
 resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
   name: frontEndAppName

@@ -1,3 +1,7 @@
+@minLength(3)
+@maxLength(6)
+param environmentName string
+
 @allowed([
   'dev'
   'test'
@@ -7,8 +11,8 @@ param environmentType string
 
 param location string = resourceGroup().location
 
-var frontEndAppName = 'BicepFrontEnd${environmentType}'
-var frontEndAppPlanName = 'BicepFrontEndPlan${environmentType}'
+var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
+var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
 
 var appPlanSku = {
   name:'F1'

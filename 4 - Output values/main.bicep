@@ -1,3 +1,7 @@
+@minLength(3)
+@maxLength(6)
+param environmentName string
+
 @allowed([
   'dev'
   'test'
@@ -11,11 +15,12 @@ param sqlAdminUser string
 @secure()
 param sqlAdminPwd string
 
-var frontEndAppName = 'BicepFrontEnd${environmentType}'
-var frontEndAppPlanName = 'BicepFrontEndPlan${environmentType}'
-var storageAccountName = 'fe${environmentType}${uniqueString(resourceGroup().id)}'
-var sqlServerName = 'sql${environmentType}${uniqueString(resourceGroup().id)}'
-var sqlDbName = 'db${environmentType}${uniqueString(resourceGroup().id)}'
+var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
+var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
+var storageAccountName = '${environmentName}${environmentType}${uniqueString(resourceGroup().id,environmentName)}'
+var sqlServerName = '${environmentName}-${environmentType}-sql'
+var sqlDbName = '${environmentName}-${environmentType}-db'
+
 var storageAccountSkuName ='Standard_GRS'
 
 var appPlanSku = {

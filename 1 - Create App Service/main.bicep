@@ -1,6 +1,6 @@
 
 resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
-  name: 'BicepFrontEndDev'
+  name: 'demo-fe-dev-app'
   location: 'northeurope'
   kind: 'app'
   properties: {
@@ -10,7 +10,7 @@ resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
 }
 
 resource frontEndAppServicePlan 'Microsoft.Web/serverfarms@2021-01-01'={
-  name:'BicepFrontEndPlanDev'
+  name:'demo-fe-dev-plan'
   location:'northeurope'
   sku:{
     name:'F1'

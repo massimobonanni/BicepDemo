@@ -1,3 +1,7 @@
+@minLength(3)
+@maxLength(6)
+param environmentName string
+
 @allowed([
   'dev'
   'test'
@@ -7,7 +11,7 @@ param environmentType string
 
 param location string = resourceGroup().location
 
-var frontEndAppInsightName = 'BicepFrontEnd${environmentType}-AI'
+var frontEndAppInsightName = '${environmentName}-${environmentType}-appinsight'
 
 resource frontEndAppInsight 'Microsoft.Insights/components@2015-05-01' = if (environmentType == 'prod') {
   name: frontEndAppInsightName
