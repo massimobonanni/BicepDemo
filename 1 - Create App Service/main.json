@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "functions": [],
+    "resources": [
+      {
+        "type": "Microsoft.Web/sites",
+        "apiVersion": "2021-01-01",
+        "name": "demo-fe-dev-app",
+        "location": "northeurope",
+        "kind": "app",
+        "properties": {
+          "enabled": true,
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', 'demo-fe-dev-plan')]"
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Web/serverfarms', 'demo-fe-dev-plan')]"
+        ]
+      },
+      {
+        "type": "Microsoft.Web/serverfarms",
+        "apiVersion": "2021-01-01",
+        "name": "demo-fe-dev-plan",
+        "location": "northeurope",
+        "sku": {
+          "name": "F1",
+          "tier": "Free"
+        }
+      }
+    ]
+  }
+
+  

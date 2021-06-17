@@ -13,8 +13,8 @@ param storageAccountId string
 param appInsightInstrumentationKey string
 param sqlConnectionString string
 
-var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
-var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
+var frontEndAppName = toLower('${environmentName}-fe-${environmentType}-app')
+var frontEndAppPlanName = toLower('${environmentName}-fe-${environmentType}-plan')
 
 var appPlanSku = {
   name: (environmentType == 'prod') ? 'P1' : 'F1'

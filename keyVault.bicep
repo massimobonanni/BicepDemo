@@ -1,8 +1,11 @@
+
 param keyVaultName string 
+@secure()
+param sqlAdminPassword string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
   name: keyVaultName
-  location: 'northeurope'
+  location: resourceGroup().location
   properties: {
     sku: {
       family: 'A'
@@ -22,20 +25,10 @@ resource sqlAdminPasswordSecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-pr
   parent: keyVault
   name: 'sqlAdminPassword'
   properties: {
-    value : 'Password1234'
+    value : sqlAdminPassword
     attributes: {
       enabled: true
     }
   }
 }
 
-resource sqlAdminUserSecret 'Microsoft.KeyVault/vaults/secrets@2021-04-01-preview' = {
-  parent: keyVault
-  name: 'sqlAdminUser'
-  properties: {
-    value : 'azureuser'
-    attributes: {
-      enabled: true
-    }
-  }
-}

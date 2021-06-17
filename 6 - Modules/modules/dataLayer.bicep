@@ -14,9 +14,9 @@ param sqlAdminUser string
 @secure()
 param sqlAdminPwd string
 
-var storageAccountName = '${environmentName}${environmentType}${uniqueString(resourceGroup().id,environmentName)}'
-var sqlServerName = '${environmentName}-${environmentType}-sql'
-var sqlDbName = '${environmentName}-${environmentType}-db'
+var storageAccountName = toLower('${environmentName}${environmentType}${uniqueString(resourceGroup().id,environmentName)}')
+var sqlServerName = toLower('${environmentName}-${environmentType}-sql')
+var sqlDbName = toLower('${environmentName}-${environmentType}-db')
 
 var storageAccountSkuName = (environmentType == 'prod') ? 'Standard_GRS' : 'Standard_LRS'
 

@@ -11,8 +11,8 @@ param environmentType string
 
 param location string = resourceGroup().location
 
-var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
-var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
+var frontEndAppName = toLower('${environmentName}-fe-${environmentType}-app')
+var frontEndAppPlanName = toLower('${environmentName}-fe-${environmentType}-plan')
 
 var appPlanSku = {
   name:'F1'

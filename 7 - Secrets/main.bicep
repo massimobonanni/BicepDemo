@@ -1,5 +1,6 @@
 @minLength(3)
 @maxLength(6)
+@description('The name of the environment. You can use a string from 3 to 6 character lenght.')
 param environmentName string
 
 @allowed([
@@ -7,14 +8,19 @@ param environmentName string
   'test'
   'prod'
 ])
+@description('The environment type. Choose one of the dev, test or prod value.')
 param environmentType string
 
+@description('Location for the environment')
 param location string = resourceGroup().location
+
+@description('Username for the SQL admin')
 param sqlAdminUser string
 
+@description('Name of the Key vault contains the SQL admin password')
 param keyVaultName string
 
-resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
+resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' existing = { // The keyvault must exist in the same resource group
   name: keyVaultName
 }
 

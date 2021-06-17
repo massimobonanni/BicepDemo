@@ -1,19 +1,24 @@
 # Create Demo Environment
 
-To create the demo environment you need to create a resource group, a KeyVault, and, then, deploy all the steps using Azure CLI or Azure Powershell
-
-## Create Resource Group
-You can use the portal or the Azure CLI command
+You can use the demoEnvironment.bicep template to create the environment for the environment.
 
 ```bash
-az grou create <resource group name>
+az deployment sub create --template-file demoEnvironment.bicep --parameters resourceGroup=<resource group name> keyVaultName=<keyvault name> sqlAdminPassword=<pwd>
 ```
 
-## Create KeyVault
-You can use the template `keyvault.bicep` to create the KeyVault you use in the step number 7 (regarding teh secrets).
+Example:
 
 ```bash
-az deployment group create --resource-group <resource Group Name> --template-file keyVault.bicep --parameters keyVaultName=<keyvault name>
+$resourceGroupName="myDemo-rg"
+$keyVaultName="mykvDemo"
+$sqlAdminPassword="Password1234"
+
+az deployment sub create \
+    --location northeurope \
+    --template-file demoEnvironment.bicep \
+    --parameters resourceGroupName=$resourceGroupName \
+                 keyVaultName=$keyVaultName \
+                 sqlAdminPassword=$sqlAdminPassword
 ```
 
 ## Deploy bicep steps

@@ -30,7 +30,7 @@ resource appServiceKeyVaultAssignment 'Microsoft.Authorization/roleAssignments@2
   name: guid('Key Vault Secret User', frontEndAppName, subscription().subscriptionId)
   scope: keyVault
   properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6') // this is the role "Key Vault Secrets User"
     principalId: frontEndAppService.identity.principalId
     principalType: 'ServicePrincipal'
   }

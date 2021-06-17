@@ -15,12 +15,12 @@ param sqlAdminUser string
 @secure()
 param sqlAdminPwd string
 
-var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
-var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
-var storageAccountName = '${environmentName}${environmentType}${uniqueString(resourceGroup().id,environmentName)}'
-var sqlServerName = '${environmentName}-${environmentType}-sql'
-var sqlDbName = '${environmentName}-${environmentType}-db'
-var frontEndAppInsightName = '${environmentName}-${environmentType}-appinsight'
+var frontEndAppName = toLower('${environmentName}-fe-${environmentType}-app')
+var frontEndAppPlanName = toLower('${environmentName}-fe-${environmentType}-plan')
+var storageAccountName = toLower('${environmentName}${environmentType}${uniqueString(resourceGroup().id,environmentName)}')
+var sqlServerName = toLower('${environmentName}-${environmentType}-sql')
+var sqlDbName = toLower('${environmentName}-${environmentType}-db')
+var frontEndAppInsightName = toLower('${environmentName}-${environmentType}-appinsight')
 
 var storageAccountSkuName = (environmentType == 'prod') ? 'Standard_GRS' : 'Standard_LRS'
 
