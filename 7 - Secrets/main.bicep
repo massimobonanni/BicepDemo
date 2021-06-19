@@ -31,7 +31,7 @@ module frontEndLayer 'modules/frontEndLayer.bicep' = {
     environmentName: environmentName
     environmentType: environmentType
     storageAccountId:dataLayer.outputs.storageAccountId
-    appInsightInstrumentationKey: (environmentType == 'prod') ? monitoringLayer.outputs.frontEndPpInsightKey : ''
+    appInsightInstrumentationKey: (environmentType == 'prod') ? monitoringLayer.outputs.frontEndInsightKey : ''
     keyVaultName: keyVaultName
     sqlConnectionStringSecret : dataLayer.outputs.sqlConnectionStringSecretUri
   }

@@ -71,9 +71,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   properties: {
     accessTier: 'Hot'
   }
-  tags:{
-    'Demo':'Bicep'
-  }
 }
 
 resource sqlServer 'Microsoft.Sql/servers@2021-02-01-preview' = {

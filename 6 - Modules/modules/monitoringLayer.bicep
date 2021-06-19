@@ -23,4 +23,4 @@ resource frontEndAppInsight 'Microsoft.Insights/components@2015-05-01' = if (env
   }
 }
 
-output frontEndPpInsightKey string = (environmentType == 'prod') ? frontEndAppInsight.properties.InstrumentationKey : ''
+output frontEndInsightKey string = (environmentType == 'prod') ? frontEndAppInsight.properties.InstrumentationKey : ''
