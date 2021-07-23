@@ -1,3 +1,6 @@
+// --------------
+// - Parameters -
+// --------------
 @minLength(3)
 @maxLength(6)
 @description('The name of the environment. You can use a string from 3 to 6 character lenght.')
@@ -20,10 +23,16 @@ param sqlAdminUser string
 @description('Name of the Key vault contains the SQL admin password')
 param keyVaultName string
 
+// -------------
+// - Resources -
+// -------------
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' existing = { // The keyvault must exist in the same resource group
   name: keyVaultName
 }
 
+// -----------
+// - Modules -
+// -----------
 module frontEndLayer 'modules/frontEndLayer.bicep' = {
   name: 'frontEndLayer'
   params: {
@@ -58,4 +67,7 @@ module monitoringLayer 'modules/monitoringLayer.bicep' = {
   }
 }
 
+// -----------
+// - Outputs -
+// -----------
 output appServiceAppHostName string =  frontEndLayer.outputs.appServiceAppHostName
