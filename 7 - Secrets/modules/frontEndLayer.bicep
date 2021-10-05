@@ -17,9 +17,31 @@ param sqlConnectionStringSecret string
 var frontEndAppName = '${environmentName}-fe-${environmentType}-app'
 var frontEndAppPlanName = '${environmentName}-fe-${environmentType}-plan'
 
-var appPlanSku = {
-  name: (environmentType == 'prod') ? 'P1' : 'F1'
-  tier: (environmentType == 'prod') ? 'Premium' : 'Free'
+var appPlanConfigurationMap = {
+  prod : {
+    appServicePlan: {
+      sku: {
+        name: 'P1'
+        tier: 'Premium'
+      }
+    }
+  }
+  test : {
+    appServicePlan: {
+      sku: {
+        name: 'F1'
+        tier: 'Free'
+      }
+    }
+  }
+  dev : {
+    appServicePlan: {
+      sku: {
+        name: 'F1'
+        tier: 'Free'
+      }
+    }
+  }
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
@@ -72,7 +94,7 @@ resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
 resource frontEndAppServicePlan 'Microsoft.Web/serverfarms@2021-01-01'={
   name : frontEndAppPlanName
   location: location
-  sku : appPlanSku
+  sku : appPlanConfigurationMap[environmentType].appServicePlan.sku
 }
 
 output appServiceAppHostName string = frontEndAppService.properties.defaultHostName
