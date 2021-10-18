@@ -3,7 +3,7 @@
 You can use the demoEnvironment.bicep template to create the environment for the environment.
 
 ```bash
-az deployment sub create --location <azure region> --template-file demoEnvironment.bicep --parameters resourceGroup=<resource group name> keyVaultName=<keyvault name> sqlAdminPassword=<pwd>
+az deployment sub create --location <azure region> --template-file demoEnvironment.bicep --parameters resourceGroupName=<resource group name> keyVaultName=<keyvault name> sqlAdminPassword=<pwd>
 ```
 
 Example:
