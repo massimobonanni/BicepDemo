@@ -28,7 +28,6 @@ The command to deploy each step is
 
 ```bash
 az deployment group create \
-    --location northeurope \
     --resource-group <resource group name> \
     --template-file main.bicep \
     --parameters <set of parameters>

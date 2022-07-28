@@ -75,15 +75,15 @@ resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
   resource appServiceConfiguration 'config'={
     name : 'appsettings'
     properties:{
-      'StorageAccountKey' : listKeys(storageAccountId,'2019-04-01').keys[0].value
-      'APPINSIGHTS_INSTRUMENTATIONKEY':(environmentType == 'prod') ? appInsightInstrumentationKey : ''
+      StorageAccountKey : listKeys(storageAccountId,'2019-04-01').keys[0].value
+      APPINSIGHTS_INSTRUMENTATIONKEY:(environmentType == 'prod') ? appInsightInstrumentationKey : ''
     }
   }
 
   resource connectionStrings 'config'={
     name : 'connectionstrings'
     properties:{
-      'SqlConnectionString' : {
+      SqlConnectionString : {
         type : 'SQLAzure'
         value : '@Microsoft.KeyVault(SecretUri=${sqlConnectionStringSecret})'
       } 

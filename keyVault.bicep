@@ -1,11 +1,14 @@
 
 param keyVaultName string 
+
 @secure()
 param sqlAdminPassword string
 
+param location string=resourceGroup().location
+
 resource keyVault 'Microsoft.KeyVault/vaults@2021-04-01-preview' = {
   name: keyVaultName
-  location: resourceGroup().location
+  location: location
   properties: {
     sku: {
       family: 'A'

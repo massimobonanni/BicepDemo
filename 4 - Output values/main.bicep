@@ -40,14 +40,14 @@ resource frontEndAppService 'Microsoft.Web/sites@2021-01-01' = {
   resource appServiceConfiguration 'config'={
     name : 'appsettings'
     properties:{
-      'StorageAccountKey' : listKeys(storageAccount.id,'2019-04-01').keys[0].value
+      StorageAccountKey : listKeys(storageAccount.id,'2019-04-01').keys[0].value
     }
   }
 
   resource connectionStrings 'config'={
     name : 'connectionstrings'
     properties:{
-      'SqlConnectionString' : {
+      SqlConnectionString : {
         type : 'SQLAzure'
         value : 'Server=tcp:${sqlServer.properties.fullyQualifiedDomainName},1433;Database=${sqlDbName};User Id=${sqlAdminUser};Password=${sqlAdminPwd};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
       } 
